@@ -1,5 +1,5 @@
 {
-    "name": "yiisoft/yii2-mongodb",
+    "name": "quangvule/yii2-mongodb",
     "description": "MongoDb extension for the Yii framework",
     "keywords": ["yii2", "mongo", "mongodb", "active-record"],
     "type": "yii2-extension",

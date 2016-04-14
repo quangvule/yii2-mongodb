@@ -59,7 +59,12 @@ class Query extends Component implements QueryInterface
      * @see options()
      */
     public $options = [];
-
+    /**
+     * @var int server-side timeout in milliseconds
+     * @see \MongoCursor::maxTimeMS()
+     * @see maxTimeMS()
+     */
+    public $maxTimeMS = 30000;
 
     /**
      * Returns the Mongo collection for this query.
@@ -97,6 +102,18 @@ class Query extends Component implements QueryInterface
     public function from($collection)
     {
         $this->from = $collection;
+
+        return $this;
+    }
+
+    /**
+     * Sets a server-side timeout for this query
+     * @param int $ms specifies a cumulative time limit in milliseconds to be allowed by the server for processing operations on the cursor.
+     * @return $this the query object itself.
+     */
+    public function maxTimeMS($ms)
+    {
+        $this->maxTimeMS = $ms;
 
         return $this;
     }
@@ -144,6 +161,7 @@ class Query extends Component implements QueryInterface
         }
         $cursor->limit($this->limit);
         $cursor->skip($this->offset);
+        $cursor->maxTimeMS($this->maxTimeMS);
 
         foreach ($this->options as $key => $value) {
             $cursor->addOption($key, $value);
